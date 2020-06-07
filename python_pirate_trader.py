@@ -12,14 +12,11 @@ def get_firm_name():
 def get_starting_options():
     starting_options = input("How do you wish to start. 1) Cash & Debt 2) Cannons No debt. : ")
     if starting_options == "1":
-        cash = 250
-        debt = cash
-        cannons = 0
+        opts = (250, 250, 0)
     else:
-        cash = 0
-        debt = 0
-        cannons = 5
-    return cash, debt,cannons
+        opts = (0, 0, 5)
+    # Tuples is a list of data that cannot be changed
+    return opts
    
 # Start Game
 welcome_message()
