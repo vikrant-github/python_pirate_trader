@@ -1,4 +1,6 @@
 import os
+import datetime
+
 MENU_DIVIDER = "------------------------------"
 GAME_TITLE = "Python Pirate Trader 0.1A"
 
@@ -18,13 +20,14 @@ def get_starting_options():
     # Tuples is a list of data that cannot be changed
     return opts
 
-def leave_port(city_list):
+def leave_port(city_list, current_date):
     i = 1
-    for city in cities:
+    for city in city_list:
         print("{0}) {1}".format(i, city['name']))
         i += 1
     select_city = input('Which city do you wish to go to?: ')
-    return city_list[int(select_city) -1]
+    current_date += datetime.timedelta(days=1)
+    return city_list[int(select_city) -1], current_date
 
 def buy():
     input("What do you want to buy? ")
@@ -44,7 +47,10 @@ cities = ({'name': 'Hong Kong', 'has_warehouse': True, 'has_bank': True},
                 {'name': 'Shanghai', 'has_warehouse': False, 'has_bank': False},
                 {'name': 'London', 'has_warehouse': False, 'has_bank': False})
 
+
 current_city = cities[0]
+current_date  = datetime.datetime(1820,1,1)
+
 game_running = True
 
 while game_running:
@@ -59,7 +65,8 @@ while game_running:
     print(f"Debt: {debt}" ) # Another way of formatting in Python 3.6 or above, fstrings or string interpolation
     print("Cannons: %d"  % cannons)
     print("City: %s" % current_city['name'])
-    print("Date: ")
+    # http://strftime.org 
+    print("Date: {:%B %d, %Y}".format(current_date))
     print(MENU_DIVIDER)
     has_bank_string = ""
     if current_city['has_bank'] == True:
@@ -68,7 +75,7 @@ while game_running:
     print("Menu L)eave Port, B)uy, S)ell, T)ransfer Warehouse, %s Q)uit" % has_bank_string)
     menu_option = input("What is your option: ")
     if menu_option == "L":
-        current_city = leave_port(cities)
+        current_city, current_date = leave_port(cities, current_date)
     elif menu_option == "B":
         buy()
     elif menu_option == "S":
