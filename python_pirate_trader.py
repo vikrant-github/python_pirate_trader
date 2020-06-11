@@ -1,5 +1,6 @@
 import os
 import datetime
+import random
 
 MENU_DIVIDER = "------------------------------"
 GAME_TITLE = "Python Pirate Trader 0.1A"
@@ -38,6 +39,31 @@ def sell():
 def visit_bank():
     input("How much you want to transfer? ")
 
+def display_products():
+    for product in products:
+        print(product.name + "--" + str(product.price))
+
+class product():
+    pass
+
+# Create Products
+ProductOne = product()
+ProductOne.name = "General Goods"
+ProductOne.minprice = 3
+ProductOne.maxprice = 20
+ProductOne.price = random.randint(ProductOne.minprice, ProductOne.maxprice)
+
+ProductTwo = product()
+ProductTwo.name = "Arms"
+ProductTwo.minprice = 10
+ProductTwo.maxprice = 75
+ProductTwo.price = random.randint(ProductTwo.minprice, ProductTwo.maxprice)
+
+products = []
+products.append(ProductOne)
+products.append(ProductTwo)
+
+
 # Start Game
 welcome_message()
 firm_name = get_firm_name()
@@ -68,6 +94,8 @@ while game_running:
     # http://strftime.org 
     print("Date: {:%B %d, %Y}".format(current_date))
     print(MENU_DIVIDER)
+    print("------City Products------")
+    display_products()
     has_bank_string = ""
     if current_city['has_bank'] == True:
         has_bank_string = "V)isit Bank,"
