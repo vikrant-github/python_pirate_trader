@@ -42,26 +42,22 @@ def visit_bank():
 def display_products():
     for product in products:
         print(product.name + "--" + str(product.price))
-
+        
+# Product Class
 class product():
-    pass
+    def __init__(self, name, minprice, maxprice):
+        self.name = name
+        self.minprice = minprice
+        self.maxprice = maxprice
+        self.price = random.randint(self.minprice, self.maxprice)
+
+
 
 # Create Products
-ProductOne = product()
-ProductOne.name = "General Goods"
-ProductOne.minprice = 3
-ProductOne.maxprice = 20
-ProductOne.price = random.randint(ProductOne.minprice, ProductOne.maxprice)
-
-ProductTwo = product()
-ProductTwo.name = "Arms"
-ProductTwo.minprice = 10
-ProductTwo.maxprice = 75
-ProductTwo.price = random.randint(ProductTwo.minprice, ProductTwo.maxprice)
 
 products = []
-products.append(ProductOne)
-products.append(ProductTwo)
+products.append(product("General Goods", 3, 20))
+products.append(product("Arms", 10, 75))
 
 
 # Start Game
