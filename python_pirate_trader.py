@@ -40,25 +40,25 @@ def visit_bank():
     input("How much you want to transfer? ")
 
 def display_products():
-    for product in products:
+    for product in Product.products:
         print(product.name + "--" + str(product.price))
         
 # Product Class
-class product():
+class Product():
+    products = []
+    # Constructor
     def __init__(self, name, minprice, maxprice):
         self.name = name
         self.minprice = minprice
         self.maxprice = maxprice
         self.price = random.randint(self.minprice, self.maxprice)
-
-
+    @classmethod
+    def create_products(cls):
+        cls.products.append(Product("General Goods", 3, 20))
+        cls.products.append(Product("Arms", 10, 75))
 
 # Create Products
-
-products = []
-products.append(product("General Goods", 3, 20))
-products.append(product("Arms", 10, 75))
-
+Product.create_products()
 
 # Start Game
 welcome_message()
@@ -95,7 +95,6 @@ while game_running:
     has_bank_string = ""
     if current_city['has_bank'] == True:
         has_bank_string = "V)isit Bank,"
-
     print("Menu L)eave Port, B)uy, S)ell, T)ransfer Warehouse, %s Q)uit" % has_bank_string)
     menu_option = input("What is your option: ")
     if menu_option == "L":
