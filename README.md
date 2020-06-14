@@ -12,3 +12,4 @@ Core aspects of the Python language are covered in this game
 # Object Oriented Programming in Python <br />
 1. Python Objects and Object Oriented Programming <br />
 2. Python Class Methods and Properties <br />
+3. Refactoring the code for creating classes <br />

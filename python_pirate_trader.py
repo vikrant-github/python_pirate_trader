@@ -24,7 +24,7 @@ def get_starting_options():
 def leave_port(city_list, current_date):
     i = 1
     for city in city_list:
-        print("{0}) {1}".format(i, city['name']))
+        print("{0}) {1}".format(i, city.name))
         i += 1
     select_city = input('Which city do you wish to go to?: ')
     current_date += datetime.timedelta(days=1)
@@ -44,7 +44,7 @@ def display_products():
         print(product.name + "--" + str(product.price))
         
 # Product Class
-class Product():
+class Product(object):
     products = []
     # Constructor
     def __init__(self, name, minprice, maxprice):
@@ -57,20 +57,33 @@ class Product():
         cls.products.append(Product("General Goods", 3, 20))
         cls.products.append(Product("Arms", 10, 75))
 
+# Product Class
+class City(object):
+    cities = []
+    # Constructor
+    def __init__(self, name, has_warehouse, has_bank):
+        self.name = name
+        self.has_warehouse = has_warehouse
+        self.has_bank = has_bank
+        #self.price = random.randint(self.minprice, self.maxprice)
+    @classmethod
+    def create_cities(cls):
+        cls.cities.append(City("Hong Kong", True, True))
+        cls.cities.append(City("Shanghai", False, False))
+        cls.cities.append(City("London", False, False))
+
+
 # Create Products
 Product.create_products()
+
+# Create Cities
+City.create_cities()
 
 # Start Game
 welcome_message()
 firm_name = get_firm_name()
 cash,debt,cannons = get_starting_options()
-# Dictionary Usage
-cities = ({'name': 'Hong Kong', 'has_warehouse': True, 'has_bank': True},
-                {'name': 'Shanghai', 'has_warehouse': False, 'has_bank': False},
-                {'name': 'London', 'has_warehouse': False, 'has_bank': False})
-
-
-current_city = cities[0]
+current_city = City.cities[0]
 current_date  = datetime.datetime(1820,1,1)
 
 game_running = True
@@ -86,24 +99,24 @@ while game_running:
     print("Cash: {:,}".format(cash)) # Better way of formatting
     print(f"Debt: {debt}" ) # Another way of formatting in Python 3.6 or above, fstrings or string interpolation
     print("Cannons: %d"  % cannons)
-    print("City: %s" % current_city['name'])
+    print("City: %s" % current_city.name)
     # http://strftime.org 
     print("Date: {:%B %d, %Y}".format(current_date))
     print(MENU_DIVIDER)
     print("------City Products------")
     display_products()
     has_bank_string = ""
-    if current_city['has_bank'] == True:
+    if current_city.has_bank == True:
         has_bank_string = "V)isit Bank,"
     print("Menu L)eave Port, B)uy, S)ell, T)ransfer Warehouse, %s Q)uit" % has_bank_string)
     menu_option = input("What is your option: ")
     if menu_option == "L":
-        current_city, current_date = leave_port(cities, current_date)
+        current_city, current_date = leave_port(City.cities, current_date)
     elif menu_option == "B":
         buy()
     elif menu_option == "S":
         sell()
-    elif menu_option == "V" and current_city['has_bank'] == True:
+    elif menu_option == "V" and current_city.has_bank == True:
         visit_bank()
     elif menu_option == "Q":
         #break
