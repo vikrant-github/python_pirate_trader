@@ -1,6 +1,7 @@
 import os
 import datetime
-import random
+from product import Product
+from city import City
 
 MENU_DIVIDER = "------------------------------"
 GAME_TITLE = "Python Pirate Trader 0.1A"
@@ -43,49 +44,31 @@ def display_products():
     for product in Product.products:
         print(product.name + "--" + str(product.price))
         
-# Product Class
-class Product(object):
-    products = []
-    # Constructor
-    def __init__(self, name, minprice, maxprice):
-        self.name = name
-        self.minprice = minprice
-        self.maxprice = maxprice
-        self.price = random.randint(self.minprice, self.maxprice)
-    @classmethod
-    def create_products(cls):
-        cls.products.append(Product("General Goods", 3, 20))
-        cls.products.append(Product("Arms", 10, 75))
 
-# Product Class
-class City(object):
-    cities = []
-    # Constructor
-    def __init__(self, name, has_warehouse, has_bank):
-        self.name = name
-        self.has_warehouse = has_warehouse
-        self.has_bank = has_bank
-        #self.price = random.randint(self.minprice, self.maxprice)
-    @classmethod
-    def create_cities(cls):
-        cls.cities.append(City("Hong Kong", True, True))
-        cls.cities.append(City("Shanghai", False, False))
-        cls.cities.append(City("London", False, False))
+class GameManager(object):
+    def __init__(self, firm_name, cash, debt, cannons, shiphold):
+        self.firm_name = firm_name
+        self.cash = cash
+        self.debt = debt
+        self.cannons = cannons
+        self.bank = 0
+        self.shiphold = shiphold
+        # Create Products
+        Product.create_products()
+        # Create Cities
+        City.create_cities()
+        self.current_city = City.cities[0]
+        self.current_date  = datetime.datetime(1820,1,1)
 
 
-# Create Products
-Product.create_products()
 
-# Create Cities
-City.create_cities()
-
-# Start Game
+# Get Game Options
 welcome_message()
 firm_name = get_firm_name()
-cash,debt,cannons = get_starting_options()
-current_city = City.cities[0]
-current_date  = datetime.datetime(1820,1,1)
+cash, debt, cannons = get_starting_options()
+game = GameManager(firm_name, cash, debt, cannons, 100)  # Creating an instance of a Game Manager Class
 
+# Start up Game
 game_running = True
 
 while game_running:
@@ -95,28 +78,28 @@ while game_running:
     print(GAME_TITLE)
     print(MENU_DIVIDER)
     #Using String Formatting: 3 different ways of formatting other than concatenation
-    print("Firm Name: %s" % firm_name)
-    print("Cash: {:,}".format(cash)) # Better way of formatting
-    print(f"Debt: {debt}" ) # Another way of formatting in Python 3.6 or above, fstrings or string interpolation
-    print("Cannons: %d"  % cannons)
-    print("City: %s" % current_city.name)
+    print("Firm Name: %s" % game.firm_name)
+    print("Cash: {:,}".format(game.cash)) # Better way of formatting
+    print(f"Debt: {game.debt}" ) # Another way of formatting in Python 3.6 or above, fstrings or string interpolation
+    print("Cannons: %d"  % game.cannons)
+    print("City: %s" % game.current_city.name)
     # http://strftime.org 
-    print("Date: {:%B %d, %Y}".format(current_date))
+    print("Date: {:%B %d, %Y}".format(game.current_date))
     print(MENU_DIVIDER)
     print("------City Products------")
     display_products()
     has_bank_string = ""
-    if current_city.has_bank == True:
+    if game.current_city.has_bank == True:
         has_bank_string = "V)isit Bank,"
     print("Menu L)eave Port, B)uy, S)ell, T)ransfer Warehouse, %s Q)uit" % has_bank_string)
     menu_option = input("What is your option: ")
     if menu_option == "L":
-        current_city, current_date = leave_port(City.cities, current_date)
+        game.current_city, current_date = leave_port(City.cities, game.current_date)
     elif menu_option == "B":
         buy()
     elif menu_option == "S":
         sell()
-    elif menu_option == "V" and current_city.has_bank == True:
+    elif menu_option == "V" and game.current_city.has_bank == True:
         visit_bank()
     elif menu_option == "Q":
         #break
