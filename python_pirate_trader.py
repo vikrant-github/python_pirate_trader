@@ -26,7 +26,7 @@ firm_name = get_firm_name()
 
 cash, debt, cannons = get_starting_options()
 
-game = GameManager(firm_name, cash, debt, cannons, 100)  # Creating an instance of a Game Manager Class
+game = GameManager(shiphold=100, name=firm_name, cash=cash, debt=debt, cannons=cannons)  # Creating an instance of a Game Manager Class
 
 # Start Up Game
 game.start_up()

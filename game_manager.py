@@ -7,13 +7,13 @@ MENU_DIVIDER = "------------------------------"
 GAME_TITLE = "Python Pirate Trader 0.1A"
 
 class GameManager(object):
-    def __init__(self, firm_name, cash, debt, cannons, shiphold):
-        self.firm_name = firm_name
-        self.cash = cash
-        self.debt = debt
-        self.cannons = cannons
+    def __init__(self, **kwargs):
+        self.firm_name = kwargs['name']
+        self.cash = kwargs['cash']
+        self.debt = kwargs['debt']
+        self.cannons = kwargs['cannons']
         self.bank = 0
-        self.shiphold = shiphold
+        self.shiphold = kwargs['shiphold']
         # Create Products
         Product.create_products()
         # Create Cities
