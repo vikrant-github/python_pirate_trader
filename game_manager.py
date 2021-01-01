@@ -2,6 +2,7 @@ from city import City
 from product import Product
 import os
 import datetime
+import random
 
 MENU_DIVIDER = "------------------------------"
 GAME_TITLE = "Python Pirate Trader 0.1A"
@@ -74,7 +75,13 @@ class GameManager(object):
         for cityproduct in self.current_city.city_products:
             print("{0}){1}--{2}--{3}".format(i, cityproduct.product.name,cityproduct.price,cityproduct.product.shipqty))
             i += 1
-            
+    def check_price_change(self):
+        result = random.randint(0, 100)
+        if result >=75:
+            for city_product in self.current_city.city_products:
+                city_product.generate_random_price()
+
+
     def start_up(self):
         game_running = True
         while game_running:
@@ -102,6 +109,7 @@ class GameManager(object):
             menu_option = input("What is your option: ")
             if menu_option == "L":
                 self.current_city, self.current_date = self.leave_port(City.cities, self.current_date)
+                self.check_price_change()
             elif menu_option == "B":
                 self.buy()
             elif menu_option == "S":
