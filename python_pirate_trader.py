@@ -22,6 +22,7 @@ def get_starting_options():
 
 # Get Game Options
 welcome_message()
+
 firm_name = get_firm_name()
 
 cash, debt, cannons = get_starting_options()

@@ -31,7 +31,16 @@ class GameManager(object):
         return city_list[int(select_city) -1], current_date
 
     def buy(self):
-        input("What do you want to buy? ")
+        buy_select = input("Which product do you want to buy? (1- %s) - C)ancel :" % str(len(Product.products)))
+        if buy_select == 'C':
+            return
+        product_to_buy = Product.products[int(buy_select) - 1]
+        qty_to_buy = input("How many {0} you wish to buy?: ".format(product_to_buy.name))
+        cost_to_buy = product_to_buy.price * int(qty_to_buy)
+        print(cost_to_buy)
+        if cost_to_buy <= self.cash:
+            self.cash -= cost_to_buy
+            product_to_buy.shipqty += int(qty_to_buy)
 
     def sell(self):
         input("What do you want to sell? ")
@@ -40,8 +49,11 @@ class GameManager(object):
         input("How much you want to transfer? ")
 
     def display_products(self):
+        i =1
         for product in Product.products:
-            print(product.name + "--" + str(product.price))
+            print("{0}){1}--{2}--{3}".format(i, product.name,product.price,product.shipqty))
+            #print(str(i) + ")" + product.name + "--" + str(product.price) + "--" + str(product.shipqty))
+            i += 1
             
     def start_up(self):
         game_running = True
@@ -62,6 +74,7 @@ class GameManager(object):
             print(MENU_DIVIDER)
             print("------City Products------")
             self.display_products()
+           
             has_bank_string = ""
             if self.current_city.has_bank == True:
                 has_bank_string = "V)isit Bank,"

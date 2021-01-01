@@ -17,3 +17,4 @@ Core aspects of the Python language are covered in this game
 # Object Oriented Design Patterns creating a Manager class in Python <br />
 1. Refactoring classes and creating a Manager class <br />
 2. Refactoring classes by creating a seperate Manager class <br />
+3. Implementing the methods part-01 <br />
