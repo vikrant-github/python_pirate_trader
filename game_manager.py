@@ -5,6 +5,7 @@ import datetime
 
 MENU_DIVIDER = "------------------------------"
 GAME_TITLE = "Python Pirate Trader 0.1A"
+PRESS_ANY_KEY = "Continue....press any key!!"
 
 class GameManager(object):
     def __init__(self, **kwargs):
@@ -13,7 +14,8 @@ class GameManager(object):
         self.debt = kwargs['debt']
         self.cannons = kwargs['cannons']
         self.bank = 0
-        self.shiphold = kwargs['shiphold']
+        self.maxshiphold = kwargs['shiphold']
+        self.currentshiphold = 0
         # Create Products
         Product.create_products()
         # Create Cities
@@ -39,11 +41,33 @@ class GameManager(object):
         cost_to_buy = product_to_buy.price * int(qty_to_buy)
         print(cost_to_buy)
         if cost_to_buy <= self.cash:
-            self.cash -= cost_to_buy
-            product_to_buy.shipqty += int(qty_to_buy)
+            if self.currentshiphold + int(qty_to_buy) <= self.maxshiphold:
+                self.cash -= cost_to_buy
+                product_to_buy.shipqty += int(qty_to_buy)
+                self.currentshiphold += int(qty_to_buy)
+            else:
+                print("There is not enough space to hold those items.")
+                input(PRESS_ANY_KEY)
+        else:
+            print("Sorry, you don't have enough money.")
+            input(PRESS_ANY_KEY)
 
     def sell(self):
-        input("What do you want to sell? ")
+        sell_select = input("Which product do you want to sell? (1- %s) - C)ancel :" % str(len(Product.products)))
+        if sell_select == 'C':
+            return
+        product_to_sell = Product.products[int(sell_select) - 1]
+        qty_to_sell = input("How many {0} you wish to sell?: ".format(product_to_sell.name))
+        if int(qty_to_sell) <= product_to_sell.shipqty:
+            self.cash += int(qty_to_sell) * product_to_sell.price
+            product_to_sell.shipqty -= int(qty_to_sell)
+            self.currentshiphold -= int(qty_to_sell)
+        else:
+            print("You don't have that many quantity to sell")
+            input(PRESS_ANY_KEY)
+
+
+
 
     def visit_bank(self):
         input("How much you want to transfer? ")
