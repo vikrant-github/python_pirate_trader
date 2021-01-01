@@ -36,14 +36,14 @@ class GameManager(object):
         buy_select = input("Which product do you want to buy? (1- %s) - C)ancel :" % str(len(Product.products)))
         if buy_select == 'C':
             return
-        product_to_buy = Product.products[int(buy_select) - 1]
-        qty_to_buy = input("How many {0} you wish to buy?: ".format(product_to_buy.name))
-        cost_to_buy = product_to_buy.price * int(qty_to_buy)
+        city_product = self.current_city.city_products[int(buy_select) - 1]
+        qty_to_buy = input("How many {0} you wish to buy?: ".format(city_product.product.name))
+        cost_to_buy = city_product.price * int(qty_to_buy)
         print(cost_to_buy)
         if cost_to_buy <= self.cash:
             if self.currentshiphold + int(qty_to_buy) <= self.maxshiphold:
                 self.cash -= cost_to_buy
-                product_to_buy.shipqty += int(qty_to_buy)
+                city_product.product.shipqty += int(qty_to_buy)
                 self.currentshiphold += int(qty_to_buy)
             else:
                 print("There is not enough space to hold those items.")
@@ -56,27 +56,23 @@ class GameManager(object):
         sell_select = input("Which product do you want to sell? (1- %s) - C)ancel :" % str(len(Product.products)))
         if sell_select == 'C':
             return
-        product_to_sell = Product.products[int(sell_select) - 1]
-        qty_to_sell = input("How many {0} you wish to sell?: ".format(product_to_sell.name))
-        if int(qty_to_sell) <= product_to_sell.shipqty:
-            self.cash += int(qty_to_sell) * product_to_sell.price
-            product_to_sell.shipqty -= int(qty_to_sell)
+        city_product = self.current_city.city_products[int(sell_select) - 1]
+        qty_to_sell = input("How many {0} you wish to sell?: ".format(city_product.product.name))
+        if int(qty_to_sell) <= city_product.product.shipqty:
+            self.cash += int(qty_to_sell) * city_product.price
+            city_product.product.shipqty -= int(qty_to_sell)
             self.currentshiphold -= int(qty_to_sell)
         else:
             print("You don't have that many quantity to sell")
             input(PRESS_ANY_KEY)
-
-
-
 
     def visit_bank(self):
         input("How much you want to transfer? ")
 
     def display_products(self):
         i =1
-        for product in Product.products:
-            print("{0}){1}--{2}--{3}".format(i, product.name,product.price,product.shipqty))
-            #print(str(i) + ")" + product.name + "--" + str(product.price) + "--" + str(product.shipqty))
+        for cityproduct in self.current_city.city_products:
+            print("{0}){1}--{2}--{3}".format(i, cityproduct.product.name,cityproduct.price,cityproduct.product.shipqty))
             i += 1
             
     def start_up(self):

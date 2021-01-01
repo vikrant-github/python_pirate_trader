@@ -19,3 +19,6 @@ Core aspects of the Python language are covered in this game
 2. Refactoring classes by creating a seperate Manager class <br />
 3. Implementing the methods part-01 <br />
 4. Implementing the methods part-02 <br />
+
+# Improving Object Oriented Design Patterns by creating separate Manager classes <br />
+1. Creating a City Product class to Manage Product Price by City <br />
