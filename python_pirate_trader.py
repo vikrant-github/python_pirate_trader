@@ -14,7 +14,7 @@ def get_firm_name():
 def get_starting_options():
     starting_options = input("How do you wish to start. 1) Cash & Debt 2) Cannons No debt. : ")
     if starting_options == "1":
-        opts = (2500, 250, 0)
+        opts = (250, 2000, 0)
     else:
         opts = (0, 0, 5)
     # Tuples is a list of data that cannot be changed

@@ -23,3 +23,4 @@ Core aspects of the Python language are covered in this game
 # Improving Object Oriented Design Patterns by creating separate Manager classes <br />
 1. Creating a City Product class to Manage Product Price by City <br />
 2. Randomly changing Product Price based on the City <br />
+3. Inceasing debt portwise and provide option for the moneylender <br />

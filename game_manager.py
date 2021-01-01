@@ -80,7 +80,17 @@ class GameManager(object):
         if result >=75:
             for city_product in self.current_city.city_products:
                 city_product.generate_random_price()
-
+    def increase_debt(self):
+        self.debt *= 1.15
+    def visit_money_lender(self):
+        payback = input("How much you wish to pay back? ")
+        if int(payback) < self.cash:
+            self.debt -= int(payback)
+            self.cash -= int(payback)
+        borrow = input("How much you wish to borrow? ")
+        if int(borrow) <= self.cash *20:
+            self.debt += int(borrow) *5
+            self.cash += int(borrow)     
 
     def start_up(self):
         game_running = True
@@ -93,7 +103,8 @@ class GameManager(object):
             #Using String Formatting: 3 different ways of formatting other than concatenation
             print("Firm Name: %s" % self.firm_name)
             print("Cash: {:,}".format(self.cash)) # Better way of formatting
-            print(f"Debt: {self.debt}" ) # Another way of formatting in Python 3.6 or above, fstrings or string interpolation
+            # print(f"Debt: {self.debt}" ) # Another way of formatting in Python 3.6 or above, fstrings or string interpolation
+            print("Debt: {:.0f}".format(self.debt))
             print("Cannons: %d"  % self.cannons)
             print("City: %s" % self.current_city.name)
             # http://strftime.org 
@@ -105,13 +116,18 @@ class GameManager(object):
             has_bank_string = ""
             if self.current_city.has_bank == True:
                 has_bank_string = "V)isit Bank,"
-            print("Menu L)eave Port, B)uy, S)ell, T)ransfer Warehouse, %s Q)uit" % has_bank_string)
+            if self.current_city.has_moneylender == True:
+                has_moneylender = "M)oney Lender,"
+            print("Menu L)eave Port, B)uy, S)ell, T)ransfer Warehouse, %s %s Q)uit" % (has_bank_string, has_moneylender))
             menu_option = input("What is your option: ")
             if menu_option == "L":
                 self.current_city, self.current_date = self.leave_port(City.cities, self.current_date)
                 self.check_price_change()
+                self.increase_debt()
             elif menu_option == "B":
                 self.buy()
+            elif menu_option == "M":
+                self.visit_money_lender()
             elif menu_option == "S":
                 self.sell()
             elif menu_option == "V" and self.current_city.has_bank == True:
