@@ -109,6 +109,7 @@ class GameManager(object):
             print("Debt: {:.0f}".format(self.debt))
             print("Cannons: %d"  % self.cannons)
             print("City: %s" % self.current_city.name)
+            print("Ship Health: %s" % self.ship_health)
             # http://strftime.org 
             print("Date: {:%B %d, %Y}".format(self.current_date))
             print(MENU_DIVIDER)

@@ -25,3 +25,4 @@ Core aspects of the Python language are covered in this game
 2. Randomly changing Product Price based on the City <br />
 3. Inceasing debt portwise and provide options for the moneylender <br />
 4. Creating a class for Pirate Encounters <br />
+5. Handling the Pirate Encounters <br />

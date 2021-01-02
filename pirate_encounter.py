@@ -19,18 +19,36 @@ class PirateEncounter(object):
         self.number_of_pirates = random.randint(1,self.pirate_strength)
         FightingPirates = True
         while FightingPirates:
+            print("******************************************************")
             print("There are %s pirates remaining." % self.number_of_pirates)
             print("You have %s cannons and your ship health is %s" % (self.game.cannons, self.game.ship_health))
             print("")
             attack_input = input("What do you wish to do? R)un or F)ight? ")
             if attack_input.upper() == 'R':
-                if self.run():
+                if self.run():                       # True if you got away
                     FightingPirates = False
             if attack_input.upper() == 'F':
-                self.fight()
+                if self.fight():                     # True if fight is over
+                    FightingPirates = False
+            self.ship_damage()                        
             print("Press any key to continue....")
+    
+    def ship_damage(self):
+        damage = random.randint(0,self.number_of_pirates *2)
+        self.game.ship_health -= damage
+        if damage <= 0:
+            print("Ship Destroyed")
+    
     def fight(self):
-        pass
+        fight_strength = 1 if self.game.cannons == 0 else self.game.cannons + 1
+        attack = random.randint(0, fight_strength + 1)
+        pirates_killed = attack if self.number_of_pirates >= attack else self.number_of_pirates
+        self.number_of_pirates -= pirates_killed
+        if self.number_of_pirates <= 0:
+            return True
+        else:
+            return False
+    
     def run(self):
         print("You try to run")
         result = random.randint(0,100)
