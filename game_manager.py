@@ -1,5 +1,6 @@
 from city import City
 from product import Product
+from pirate_encounter import PirateEncounter
 import os
 import datetime
 import random
@@ -17,6 +18,7 @@ class GameManager(object):
         self.bank = 0
         self.maxshiphold = kwargs['shiphold']
         self.currentshiphold = 0
+        self.ship_health = 100
         # Create Products
         Product.create_products()
         # Create Cities
@@ -124,6 +126,7 @@ class GameManager(object):
                 self.current_city, self.current_date = self.leave_port(City.cities, self.current_date)
                 self.check_price_change()
                 self.increase_debt()
+                pirates = PirateEncounter(self)
             elif menu_option == "B":
                 self.buy()
             elif menu_option == "M":
