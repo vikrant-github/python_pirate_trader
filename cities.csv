@@ -1,0 +1,6 @@
+name,has_warehouse,has_bank,has_moneylender
+Hong Kong,True,True,True
+Shanghai,False,False,False
+London,False,False,False
+Nagasaki,False,False,False
+Mumbai,False,False,False

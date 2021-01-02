@@ -1,6 +1,7 @@
 from city import City
 from product import Product
 from pirate_encounter import PirateEncounter
+from game_data import load_city_data
 import os
 import datetime
 import random
@@ -22,7 +23,8 @@ class GameManager(object):
         # Create Products
         Product.create_products()
         # Create Cities
-        City.create_cities()
+        # City.create_cities()
+        load_city_data(City)
         self.current_city = City.cities[0]
         self.current_date  = datetime.datetime(1820,1,1)
     
@@ -119,9 +121,10 @@ class GameManager(object):
             has_bank_string = ""
             if self.current_city.has_bank == True:
                 has_bank_string = "V)isit Bank,"
+            has_moneylender = ""
             if self.current_city.has_moneylender == True:
                 has_moneylender = "M)oney Lender,"
-            print("Menu L)eave Port, B)uy, S)ell, T)ransfer Warehouse, %s %s Q)uit" % (has_bank_string, has_moneylender))
+            print("Menu L)eave Port, B)uy, S)ell, T)ransfer Warehouse, %s%s Q)uit" % (has_bank_string, has_moneylender))
             menu_option = input("What is your option: ")
             if menu_option == "L":
                 self.current_city, self.current_date = self.leave_port(City.cities, self.current_date)

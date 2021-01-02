@@ -19,7 +19,7 @@ class PirateEncounter(object):
         self.number_of_pirates = random.randint(1,self.pirate_strength)
         FightingPirates = True
         while FightingPirates:
-            print("******************************************************")
+            print("************************************")
             print("There are %s pirates remaining." % self.number_of_pirates)
             print("You have %s cannons and your ship health is %s" % (self.game.cannons, self.game.ship_health))
             print("")
